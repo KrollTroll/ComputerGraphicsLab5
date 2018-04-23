@@ -5,8 +5,8 @@
  * This file implements prototypes for the point object
  */
 
-#ifndef POINT_H
-#define POINT_H
+#ifndef POINT_H_
+#define POINT_H_
 
 #include "shape.h"
 

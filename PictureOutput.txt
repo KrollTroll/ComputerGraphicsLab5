@@ -1,0 +1,74 @@
+PICTURE OUTPUT
+START TRIANGLE
+  312
+  84
+  255
+  0
+  0
+  44
+  312
+  193
+  355
+END
+
+START TRIANGLE
+  393
+  287
+  255
+  255
+  0
+  561
+  299
+  544
+  153
+END
+
+START TRIANGLE
+  644
+  162
+  0
+  255
+  0
+  540
+  489
+  726
+  467
+END
+
+START TRIANGLE
+  405
+  27
+  0
+  0
+  255
+  83
+  586
+  323
+  558
+END
+
+START TRIANGLE
+  403
+  335
+  255
+  0
+  255
+  473
+  582
+  534
+  555
+END
+
+START TRIANGLE
+  680
+  17
+  0
+  255
+  255
+  446
+  73
+  726
+  146
+END
+
+
