@@ -3,9 +3,13 @@
 
 #include <iostream>
 #include <fstream>
-// Constructor
+
+/**
+ * constructor
+ */
 drawing::drawing()
 {
+	//initalize variables
 	dragging = false;
 
 	dot = true;
@@ -18,20 +22,30 @@ drawing::drawing()
 
 	x0 = x1 = y0 = y1 = 0;
 	RED = GREEN = BLUE = 0;
+	//decode default color value
 	decodeColor(GraphicsContext::GREEN);
 	return;
 }
 
-//TODO: mod this
+/**
+ * repaint the image upon an exposure event
+ * @param gc : graphics context to repaint
+ */
 void drawing::paint(GraphicsContext*gc)
 {
+	//erase windows and redraw
 	gc->clear();
 	picture.draw(gc);
 	return;
 }
 
-
+/**
+ * event that is activated upon a key being pressed down
+ * @param gc      : graphics context object that may be affected
+ * @param keycode : code of key that was pressed
+ */
 void drawing::keyDown(GraphicsContext* gc, unsigned int keycode){
+	//this ensures that state cannot be changed if currently drawing
 	if(!dragging){
 		//point
 		if(keycode == 112){
@@ -54,40 +68,47 @@ void drawing::keyDown(GraphicsContext* gc, unsigned int keycode){
 			tri = true;
 			tVert = 0;
 		}
-
+		//hit 1 for red
 		else if(keycode == 49){
 			gc->setColor(GraphicsContext::RED);
 			decodeColor(GraphicsContext::RED);
 		}
+		//hit 2 for yellow
 		else if(keycode == 50){
 			gc->setColor(GraphicsContext::YELLOW);
 			decodeColor(GraphicsContext::YELLOW);
 		}
+		//hit 3 for green
 		else if(keycode == 51){
 			gc->setColor(GraphicsContext::GREEN);
 			decodeColor(GraphicsContext::GREEN);
 		}
+		//hit 4 for blue
 		else if(keycode == 52){
 			gc->setColor(GraphicsContext::BLUE);
 			decodeColor(GraphicsContext::BLUE);
 		}
+		//hit 5 for magenta
 		else if(keycode == 53){
 			gc->setColor(GraphicsContext::MAGENTA);
 			decodeColor(GraphicsContext::MAGENTA);
 		}
+		//hit 6 for cyan
 		else if(keycode == 54){
 			gc->setColor(GraphicsContext::CYAN);
 			decodeColor(GraphicsContext::CYAN);
 		}
+		//hit 7 for gray
 		else if(keycode == 55){
 			gc->setColor(GraphicsContext::GRAY);
 			decodeColor(GraphicsContext::GRAY);
 		}
+		//hit 8 for white
 		else if(keycode == 56){
 			gc->setColor(GraphicsContext::WHITE);
 			decodeColor(GraphicsContext::WHITE);
 		}
-		//save an image
+		//hit s to save an image
 		else if(keycode == 115){
 			std::ofstream output;
 			output.open("PictureOutput.txt");
@@ -95,7 +116,7 @@ void drawing::keyDown(GraphicsContext* gc, unsigned int keycode){
 			output << picture << std:: endl;
 			output.close();
 		}
-		//open an image
+		//hit o to open an image
 		else if(keycode == 111){
 			picture.erase();
 			std::ifstream input;
@@ -110,8 +131,16 @@ void drawing::keyDown(GraphicsContext* gc, unsigned int keycode){
 	}
 }
 
+/**
+ * event that is activated upon the mouse being pressed down
+ * @param gc     : graphics context object that may be affected
+ * @param button : mouse button that was pressed
+ * @param x		 : x coordinate of mouse pointer
+ * @param y		 : y coordinate of mouse pointer
+ */
 void drawing::mouseButtonDown(GraphicsContext* gc, unsigned int button, int x, int y)
 {
+	//if in line-drawing mode
 	if(seg){
 		// mouse button pushed down
 		// - clear context
@@ -123,18 +152,23 @@ void drawing::mouseButtonDown(GraphicsContext* gc, unsigned int button, int x, i
 		y0 = y1 = y;
 		gc->setMode(GraphicsContext::MODE_XOR);
 		gc->drawLine(x0,y0,x1,y1);
+		//reset dragging mode
 		dragging = true;
 	}
-
+	//if in triangle drawing mode
 	else if(tri){
+		//if the first verte has not been decided
 		if(tVert == 0){
 			xOrg = x0 = x1 = x;
 			yOrg = y0 = y1 = y;
 			gc->setMode(GraphicsContext::MODE_XOR);
 			gc->drawLine(x0, y0, x1, y1);
+			//turn dragging mode on
 			dragging = true;
+			//first vertex assigned
 			tVert++;
 		}
+		//if the second vertex has not ben decided
 		else if(tVert == 1){
 			// undraw old line
 			gc->drawLine(x0,y0,x1,y1);
@@ -149,10 +183,15 @@ void drawing::mouseButtonDown(GraphicsContext* gc, unsigned int button, int x, i
 			y0 = y1 = y;
 			gc->setMode(GraphicsContext::MODE_XOR);
 			gc->drawLine(x0, y0, x1, y1);
+			if(x1!=xVert2&&y1!=yVert2){
+			gc->drawLine(x1, y1, xOrg, yOrg);}
+			//second vertex assigned
 			tVert++;
 		}
+		//if the third vertex is not decided
 		else if(tVert == 2){
 			// undraw old line
+			gc->drawLine(x1, y1, xOrg, yOrg);
 			gc->drawLine(x0,y0,x1,y1);
 			// just in x and y here do not match x and y of last mouse move
 			xVert3 = x1 = x;
@@ -162,24 +201,38 @@ void drawing::mouseButtonDown(GraphicsContext* gc, unsigned int button, int x, i
 			// new line drawn in copy mode
 			gc->drawLine(x0,y0,x1,y1);
 			gc->drawLine(x1, y1, xOrg, yOrg);
+			//reset to no vertices
 			tVert = 0;
+			//reset dragging
 			dragging = false;
+			//ad triangle to image
 			triangle t1(xOrg, yOrg, RED, GREEN, BLUE, xVert2, yVert2, xVert3, yVert3);
 			picture.add(&t1);
 		}
 	}
+	//assume pixel if other state somehow reached
 	else{
 		gc->setPixel(x, y);
+		//add pixel to image
 		point p1(0,0,0,0,0);
 		picture.add(&p1);
 	}
 	return;
 }
 
+/**
+ * event that is activated upon the mouse being released
+ * @param gc     : graphics context object that may be affected
+ * @param button : mouse button that was pressed
+ * @param x		 : x coordinate of mouse pointer
+ * @param y		 : y coordinate of mouse pointer
+ */
 void drawing::mouseButtonUp(GraphicsContext* gc, unsigned int button, int x, int y)
 {
+	//if currently drawing a line
 	if(dragging)
 	{
+		//as long in line state
 		if(seg){
 			// undraw old line
 			gc->drawLine(x0,y0,x1,y1);
@@ -192,16 +245,25 @@ void drawing::mouseButtonUp(GraphicsContext* gc, unsigned int button, int x, int
 			gc->drawLine(x0,y0,x1,y1);
 			// clear flag
 			dragging = false;
+			// add line to image
 			line l1(x0, y0, RED, GREEN, BLUE, x1, y1);
 		}
 	}
 return;
 }
 
+/**
+ * event that is activated upon the mouse being moved
+ * @param gc : graphics context object that may be affected
+ * @param x  : x coordinate of mouse pointer
+ * @param y  : y coordinate of mouse pointer
+ */
 void drawing::mouseMove(GraphicsContext* gc, int x, int y)
 {
+	//as long as the mouse is dragging the line
 	if(dragging)
 	{
+		//if in line-drawing mode
 		if(seg){
 			// mouse moved - "undraw" old line, then re-draw in new position
 			// will already be in XOR mode if dragging
@@ -213,16 +275,38 @@ void drawing::mouseMove(GraphicsContext* gc, int x, int y)
 			// new line drawn
 			gc->drawLine(x0,y0,x1,y1);
 		}
+		//if in triangle-drawing mode
 		else if(tri){
+			//if second vertex has been decided
+			// this is a special check that allows both end lines to be drawn
+			if(tVert == 2){
+				gc->drawLine(x0, y0, x1, y1);
+				//this check prevents XORing the defined bas line
+				if(x1!=xVert2&&y1!=yVert2)
+				{
+					gc->drawLine(x1, y1, xOrg, yOrg);
+				}
+				x1 = x;
+				y1 = y;
+				gc->drawLine(x0, y0, x1, y1);
+				if(x1!=xVert2&&y1!=yVert2){
+				gc->drawLine(x1, y1, xOrg, yOrg);}
+			}
+			else{
 				gc->drawLine(x0, y0, x1, y1);
 				x1 = x;
 				y1 = y;
 				gc->drawLine(x0, y0, x1, y1);
+			}
 		}
 	}
 return;
 }
 
+/**
+ * this is a helper method to decode the current context color to R, G, and B values
+ * @param color
+ */
 void drawing::decodeColor(unsigned int color){
 	RED = (color >> 16) & 0xFF;
 	GREEN = (color >> 8) & 0xFF;
