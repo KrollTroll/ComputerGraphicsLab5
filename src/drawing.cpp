@@ -214,7 +214,7 @@ void drawing::mouseButtonDown(GraphicsContext* gc, unsigned int button, int x, i
 	else{
 		gc->setPixel(x, y);
 		//add pixel to image
-		point p1(0,0,0,0,0);
+		point p1(x, y, RED, GREEN, BLUE);
 		picture.add(&p1);
 	}
 	return;
@@ -247,6 +247,7 @@ void drawing::mouseButtonUp(GraphicsContext* gc, unsigned int button, int x, int
 			dragging = false;
 			// add line to image
 			line l1(x0, y0, RED, GREEN, BLUE, x1, y1);
+			picture.add(&l1);
 		}
 	}
 return;

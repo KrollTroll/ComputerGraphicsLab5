@@ -1,74 +1,258 @@
 PICTURE OUTPUT
-START TRIANGLE
-  312
-  84
+START POINT
+  183
+  39
+  0
+  255
+  0
+END
+
+START POINT
+  278
+  127
+  0
+  255
+  0
+END
+
+START POINT
+  336
+  152
+  0
+  255
+  0
+END
+
+START POINT
+  388
+  172
+  0
+  255
+  0
+END
+
+START POINT
+  396
+  171
+  0
+  255
+  0
+END
+
+START POINT
+  593
+  362
+  0
+  255
+  0
+END
+
+START POINT
+  628
+  409
+  0
+  255
+  0
+END
+
+START POINT
+  280
+  374
+  0
+  255
+  0
+END
+
+START POINT
+  245
+  365
+  0
+  255
+  0
+END
+
+START POINT
+  324
+  306
+  0
+  255
+  0
+END
+
+START POINT
+  400
+  292
+  0
+  255
+  0
+END
+
+START POINT
+  524
+  204
+  0
+  255
+  0
+END
+
+START POINT
+  650
+  231
+  0
+  255
+  0
+END
+
+START POINT
+  734
+  330
+  0
+  255
+  0
+END
+
+START LINE
+  498
+  46
   255
   0
   0
-  44
-  312
-  193
-  355
+  225
+  226
+END
+
+START LINE
+  190
+  377
+  255
+  0
+  0
+  525
+  261
+END
+
+START LINE
+  648
+  480
+  255
+  0
+  0
+  118
+  -5
+END
+
+START LINE
+  358
+  137
+  255
+  255
+  255
+  358
+  137
+END
+
+START LINE
+  437
+  125
+  255
+  255
+  255
+  437
+  125
+END
+
+START LINE
+  243
+  327
+  255
+  255
+  255
+  236
+  327
 END
 
 START TRIANGLE
-  393
-  287
+  533
+  91
   255
   255
-  0
-  561
-  299
-  544
-  153
+  255
+  197
+  289
+  326
+  411
 END
 
 START TRIANGLE
-  644
-  162
-  0
+  495
+  404
   255
-  0
-  540
-  489
-  726
-  467
+  255
+  255
+  515
+  180
+  684
+  208
 END
 
 START TRIANGLE
-  405
-  27
-  0
-  0
+  735
+  236
   255
-  83
-  586
-  323
-  558
+  255
+  255
+  395
+  567
+  602
+  575
 END
 
 START TRIANGLE
-  403
-  335
+  300
+  505
   255
-  0
   255
-  473
-  582
-  534
-  555
+  255
+  90
+  391
+  65
+  443
 END
 
 START TRIANGLE
-  680
-  17
-  0
+  46
+  108
   255
   255
-  446
-  73
-  726
-  146
+  255
+  117
+  53
+  182
+  241
+END
+
+START TRIANGLE
+  928
+  69
+  255
+  255
+  255
+  779
+  382
+  939
+  367
+END
+
+START TRIANGLE
+  988
+  400
+  255
+  255
+  255
+  486
+  806
+  850
+  682
 END
 
 
